@@ -8,7 +8,7 @@ keeping early bring-up compatibility.
 - User-facing brand strings now say ElyraOS/Elyra Updater.
 - Download path is `/data/elyraos_updates/`.
 - Export path is `ElyraOS updates/`.
-- Default OTA endpoint is `https://ota.elyraos.org/api/v1/{device}/{type}/{incr}`.
+- Default OTA endpoint is `https://elyraos-project.github.io/ota/api/v1/{device}/{type}/{incr}`.
 - The app prefers ElyraOS build properties and falls back to LineageOS ones.
 
 ## Why the package name is not renamed yet

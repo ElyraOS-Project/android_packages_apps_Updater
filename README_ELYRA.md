@@ -24,7 +24,7 @@ when needed:
 ## Default OTA endpoint
 
 ```text
-https://ota.elyraos.org/api/v1/{device}/{type}/{incr}
+https://elyraos-project.github.io/ota/api/v1/{device}/{type}/{incr}
 ```
 
 This can be overridden at runtime with:

@@ -5,7 +5,7 @@ The updater expects a JSON response containing a `response` array.
 Default endpoint:
 
 ```text
-https://ota.elyraos.org/api/v1/{device}/{type}/{incr}
+https://elyraos-project.github.io/ota/api/v1/{device}/{type}/{incr}
 ```
 
 Placeholders:
@@ -25,7 +25,7 @@ Example response:
       "id": "sha256-or-build-id",
       "romtype": "UNOFFICIAL",
       "size": 2147483648,
-      "url": "https://ota.elyraos.org/builds/garnet/elyra.zip",
+      "url": "https://elyraos-project.github.io/ota/builds/garnet/elyra.zip",
       "version": "23.2"
     }
   ]
