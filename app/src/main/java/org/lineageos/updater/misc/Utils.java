@@ -74,16 +74,17 @@ public class Utils {
     }
 
     public static boolean isCompatible(UpdateBaseInfo update) {
-        if (update.getVersion().compareTo(SystemProperties.get(Constants.PROP_BUILD_VERSION)) < 0) {
+        if (update.getVersion().compareTo(BuildInfoUtils.getBuildVersion()) < 0) {
             Log.d(TAG, update.getName() + " is older than current Android version");
             return false;
         }
-        if (!SystemProperties.getBoolean(Constants.PROP_UPDATER_ALLOW_DOWNGRADING, false) &&
+        if (!BuildInfoUtils.getBooleanProperty(Constants.PROP_UPDATER_ALLOW_DOWNGRADING,
+                Constants.PROP_LEGACY_UPDATER_ALLOW_DOWNGRADING, false) &&
                 update.getTimestamp() <= SystemProperties.getLong(Constants.PROP_BUILD_DATE, 0)) {
             Log.d(TAG, update.getName() + " is older than/equal to the current build");
             return false;
         }
-        if (!update.getType().equalsIgnoreCase(SystemProperties.get(Constants.PROP_RELEASE_TYPE))) {
+        if (!update.getType().equalsIgnoreCase(BuildInfoUtils.getReleaseType())) {
             Log.d(TAG, update.getName() + " has type " + update.getType());
             return false;
         }
@@ -107,14 +108,16 @@ public class Utils {
     }
 
     public static boolean canInstall(UpdateBaseInfo update) {
-        boolean allowMajorUpgrades = SystemProperties.getBoolean(
-                Constants.PROP_ALLOW_MAJOR_UPGRADES, false);
+        boolean allowMajorUpgrades = BuildInfoUtils.getBooleanProperty(
+                Constants.PROP_ALLOW_MAJOR_UPGRADES,
+                Constants.PROP_LEGACY_ALLOW_MAJOR_UPGRADES, false);
 
-        return (SystemProperties.getBoolean(Constants.PROP_UPDATER_ALLOW_DOWNGRADING, false) ||
+        return (BuildInfoUtils.getBooleanProperty(Constants.PROP_UPDATER_ALLOW_DOWNGRADING,
+                Constants.PROP_LEGACY_UPDATER_ALLOW_DOWNGRADING, false) ||
                 update.getTimestamp() > SystemProperties.getLong(Constants.PROP_BUILD_DATE, 0)) &&
                 compareVersions(
                         update.getVersion(),
-                        SystemProperties.get(Constants.PROP_BUILD_VERSION),
+                        BuildInfoUtils.getBuildVersion(),
                         allowMajorUpgrades);
     }
 
@@ -152,11 +155,10 @@ public class Utils {
 
     public static String getServerURL(Context context) {
         String incrementalVersion = SystemProperties.get(Constants.PROP_BUILD_VERSION_INCREMENTAL);
-        String device = SystemProperties.get(Constants.PROP_NEXT_DEVICE,
-                SystemProperties.get(Constants.PROP_DEVICE));
-        String type = SystemProperties.get(Constants.PROP_RELEASE_TYPE).toLowerCase(Locale.ROOT);
+        String device = BuildInfoUtils.getDevice();
+        String type = BuildInfoUtils.getReleaseType().toLowerCase(Locale.ROOT);
 
-        String serverUrl = SystemProperties.get(Constants.PROP_UPDATER_URI);
+        String serverUrl = BuildInfoUtils.getUpdaterUri();
         if (serverUrl.trim().isEmpty()) {
             serverUrl = context.getString(R.string.updater_server_url);
         }
@@ -167,14 +169,12 @@ public class Utils {
     }
 
     public static String getUpgradeBlockedURL(Context context) {
-        String device = SystemProperties.get(Constants.PROP_NEXT_DEVICE,
-                SystemProperties.get(Constants.PROP_DEVICE));
+        String device = BuildInfoUtils.getDevice();
         return context.getString(R.string.blocked_update_info_url, device);
     }
 
     public static String getChangelogURL(Context context) {
-        String device = SystemProperties.get(Constants.PROP_NEXT_DEVICE,
-                SystemProperties.get(Constants.PROP_DEVICE));
+        String device = BuildInfoUtils.getDevice();
         return context.getString(R.string.menu_changelog_url, device);
     }
 

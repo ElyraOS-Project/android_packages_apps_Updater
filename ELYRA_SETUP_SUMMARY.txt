@@ -1,0 +1,15 @@
+ElyraOS Updater setup
+
+Changes included:
+- Added ElyraOS OTA branding in default strings.
+- Switched default update storage to /data/elyraos_updates/.
+- Switched default OTA endpoint to ota.elyraos.org placeholder.
+- Added ElyraOS system property support with LineageOS fallback.
+- Kept org.lineageos.updater package name for early compatibility.
+- Added ElyraOS documentation and validation helper.
+
+Recommended repository:
+ElyraOS-Project/android_packages_apps_Updater
+
+Recommended source path:
+packages/apps/Updater
